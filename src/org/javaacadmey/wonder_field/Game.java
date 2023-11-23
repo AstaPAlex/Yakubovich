@@ -5,11 +5,11 @@ import org.javaacadmey.wonder_field.player.Player;
 import java.util.Scanner;
 
 public class Game {
-    private static final int NUMBER_PLAYERS = 3;
-    private static final int NUMBER_ROUNDS = 4;
-    private static final int NUMBER_GROUP_ROUNDS = 3;
-    private static final int INDEX_FINAL_ROUND = 3;
-    public static Scanner scanner = new Scanner(System.in);
+    final static private int NUMBER_PLAYERS = 3;
+    final static private int NUMBER_ROUNDS = 4;
+    final static private int NUMBER_GROUP_ROUNDS = 3;
+    final static private int INDEX_FINAL_ROUND = 3;
+    static public Scanner scanner = new Scanner(System.in);
     private String[] question = new String[NUMBER_ROUNDS];
     private String[] answer =new String[NUMBER_ROUNDS];
     private Yakubovich yakubovich;
