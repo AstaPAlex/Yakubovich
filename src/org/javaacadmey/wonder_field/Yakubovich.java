@@ -27,7 +27,6 @@ public class Yakubovich {
                 }
             }
             System.out.println();
-
     }
 
     public void askQuestion(String question){
@@ -42,10 +41,6 @@ public class Yakubovich {
         System.out.println("Якубович: Молодец! " + name + " из " + city + " проходит в финал!");
     }
 
-    public void sayWinner(String name, String city){
-        System.out.println("Якубович: Молодец! " + name + " из " + city + " проходит в финал!");
-    }
-
     public boolean checkAnswer(Player player, PlayerAnswer playerAnswer, Tableau tableau, boolean finalRound){
         if (playerAnswer.getTypeAnswerPlayer().equals("буква")){
             return checkAnswerLetter(playerAnswer.getAnswerPlayer(),tableau);
@@ -55,7 +50,7 @@ public class Yakubovich {
         return false;
     }
 
-    public boolean checkAnswerLetter(String answerPlayer, Tableau tableau){
+    private boolean checkAnswerLetter(String answerPlayer, Tableau tableau){
         if (tableau.checkLetters(answerPlayer)){
             System.out.println("Якубович: Есть такая буква, откройте ее!");
             tableau.showLettersOfTableau();
@@ -68,7 +63,7 @@ public class Yakubovich {
         }
     }
 
-    public boolean checkAnswerWord(Player player, String answerPlayer, Tableau tableau, boolean finalRound){
+    private boolean checkAnswerWord(Player player, String answerPlayer, Tableau tableau, boolean finalRound){
         if (tableau.checkWord(answerPlayer)){
             System.out.println("Якубович: " + answerPlayer + " Абсолютно верно!");
             sayWinner(player.getName(), player.getCity(), finalRound);
