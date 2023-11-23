@@ -1,5 +1,4 @@
 package org.javaacadmey.wonder_field;
-
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -7,12 +6,13 @@ public class Tableau {
     private String answer;
     private String[] lettersOfTableau;
 
-    public void init(String answer){
+    public void init(String answer) {
         lettersOfTableau = new String[answer.length()];
         Arrays.fill(lettersOfTableau, "_");
         this.answer = answer.toUpperCase();
     }
-    public void showLettersOfTableau(){
+
+    public void showLettersOfTableau() {
         if (!answer.isEmpty()){
             for (String letter : lettersOfTableau) {
                 System.out.print(letter);
@@ -21,7 +21,7 @@ public class Tableau {
         }
     }
 
-    public boolean checkLetters (String letter){
+    public boolean checkLetters (String letter) {
         boolean result = false;
         if (isEmpty(letter)){
             return false;
@@ -42,11 +42,12 @@ public class Tableau {
         }
         return false;
     }
-    public boolean isEmpty(String str){
+
+    public boolean isEmpty(String str) {
         return str.isEmpty();
     }
 
-    public boolean checkWord(String word){
+    public boolean checkWord(String word) {
         if (isEmpty(word)){
             return false;
         }
@@ -62,7 +63,7 @@ public class Tableau {
         return false;
     }
 
-    public boolean containsUnknownLetters(){
+    public boolean containsUnknownLetters() {
         for (String letter : lettersOfTableau){
             if (letter.equals("_")) return true;
         }

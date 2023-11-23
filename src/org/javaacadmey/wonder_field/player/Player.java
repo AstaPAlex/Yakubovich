@@ -1,12 +1,10 @@
 package org.javaacadmey.wonder_field.player;
-
 import org.javaacadmey.wonder_field.Game;
-
 import java.util.Locale;
 
 public class Player {
-    private String name;
-    private String city;
+    final private String name;
+    final private String city;
 
     public Player(String[] nameAndCity) {
         this.name = nameAndCity[0];
@@ -25,7 +23,7 @@ public class Player {
         while (true) {
             String letter = Game.scanner.nextLine();
             if (letter.length() == 1) {
-                if (Character.UnicodeBlock.of(letter.charAt(0)).equals(Character.UnicodeBlock.CYRILLIC)) {
+                if (Character.UnicodeBlock.of(letter.charAt(0)).equals(Character.UnicodeBlock.CYRILLIC)){
                     System.out.println("Игрок "+ name +": буква " + letter);
                     return letter.toUpperCase(Locale.ROOT);
                 } else {
@@ -34,18 +32,18 @@ public class Player {
                     }
                 }
             } else {
-                System.out.println("Ошибка! Введи одну букву");
+                System.out.println("Ошибка! Введи одну букву!");
             }
         }
     }
 
-    public String sayWord(){
+    public String sayWord() {
         String word = Game.scanner.nextLine();
         System.out.println("Игрок " + name + ": слово " + word);
         return word;
     }
 
-    public PlayerAnswer movePlayer(){
+    public PlayerAnswer movePlayer() {
         System.out.println("Ход игрока " + name + ", " + city);
         System.out.println("Если хотите букву нажмите 'б' и enter, если хотите слово нажмите 'c' и enter");
         while (true) {
