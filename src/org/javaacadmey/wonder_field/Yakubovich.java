@@ -54,7 +54,6 @@ public class Yakubovich {
         if (tableau.checkLetters(answerPlayer)){
             System.out.println("Якубович: Есть такая буква, откройте ее!");
             tableau.showLettersOfTableau();
-
             return true;
         } else {
             System.out.println("Якубович: Нет такой буквы! Следующий игрок, крутите барабан!");

@@ -7,8 +7,6 @@ public class Tableau {
     private String answer;
     private String[] lettersOfTableau;
 
-
-
     public void init(String answer){
         lettersOfTableau = new String[answer.length()];
         Arrays.fill(lettersOfTableau, "_");
@@ -25,8 +23,12 @@ public class Tableau {
 
     public boolean checkLetters (String letter){
         boolean result = false;
-        if (isEmpty(letter)) return false;
-        if (isEmpty(answer)) return false;
+        if (isEmpty(letter)){
+            return false;
+        }
+        if (isEmpty(answer)){
+            return false;
+        }
         if (answer.contains(letter) & letter.length() == 1){
             for (int i = 0; i < answer.length(); i ++){
                 if (String.valueOf(answer.charAt(i)).equalsIgnoreCase(letter)){
@@ -45,8 +47,12 @@ public class Tableau {
     }
 
     public boolean checkWord(String word){
-        if (isEmpty(word)) return false;
-        if (isEmpty(answer)) return false;
+        if (isEmpty(word)){
+            return false;
+        }
+        if (isEmpty(answer)){
+            return false;
+        }
         if (answer.equalsIgnoreCase(word)){
             for (int i = 0; i < answer.length(); i++){
                 lettersOfTableau[i] = String.valueOf(answer.charAt(i)).toUpperCase(Locale.ROOT);
@@ -56,12 +62,10 @@ public class Tableau {
         return false;
     }
 
-
     public boolean containsUnknownLetters(){
         for (String letter : lettersOfTableau){
             if (letter.equals("_")) return true;
         }
         return false;
     }
-
 }

@@ -18,7 +18,6 @@ public class Game {
     private Tableau tableau;
     private boolean finalRound;
 
-
     public void init(){
         System.out.println("Запуск игры \"Поле чудес\" - подготовка к игре. Вам нужно ввести вопросы и ответы для игры.");
         /*
@@ -77,7 +76,6 @@ public class Game {
             winners[i] = startPlayRound(players, tableau, finalRound);
         }
         return true;
-
     }
 
     private String[] getPlayersName(Player[] players){
@@ -94,7 +92,9 @@ public class Game {
                 boolean result = true;
                 while (result){
                     result = yakubovich.checkAnswer(player, player.movePlayer(), tableau, finalRound);
-                    if (!tableau.containsUnknownLetters()) return player;
+                    if (!tableau.containsUnknownLetters()){
+                        return player;
+                    }
                 }
             }
         }
