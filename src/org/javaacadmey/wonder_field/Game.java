@@ -35,9 +35,7 @@ public class Game {
         answer[2]="Осьминог";
         question[3]="Какая страна мира имеет две столицы?";
         answer[3]="Боливия";
-
         System.out.println("Иницализация закончена, игра начнется через 5 секунд");
-
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -107,5 +105,4 @@ public class Game {
         tableau.showLettersOfTableau();
         startPlayRound(winners, tableau, true);
     }
-
 }
