@@ -3,15 +3,15 @@ import org.javaacadmey.wonder_field.player.Player;
 import java.util.Scanner;
 
 public class Game {
-    static final private int NUMBER_PLAYERS = 3;
-    static final private int NUMBER_ROUNDS = 4;
-    static final private int NUMBER_GROUP_ROUNDS = 3;
-    static final private int INDEX_FINAL_ROUND = 3;
-    static public Scanner scanner = new Scanner(System.in);
-    final private String[] question = new String[NUMBER_ROUNDS];
-    final private String[] answer = new String[NUMBER_ROUNDS];
+    private static final int NUMBER_PLAYERS = 3;
+    private static final int NUMBER_ROUNDS = 4;
+    private static final int NUMBER_GROUP_ROUNDS = 3;
+    private static final int INDEX_FINAL_ROUND = 3;
+    public static Scanner scanner = new Scanner(System.in);
+    private final String[] question = new String[NUMBER_ROUNDS];
+    private final String[] answer = new String[NUMBER_ROUNDS];
     private Yakubovich yakubovich;
-    final private Player[] winners = new Player[INDEX_FINAL_ROUND];
+    private final Player[] winners = new Player[INDEX_FINAL_ROUND];
     private Player[] players;
     private Tableau tableau;
     private boolean readyFinalRound;
@@ -21,18 +21,11 @@ public class Game {
         //createQuestionAndAnswer();
         createQuestionAndAnswerAuto();
         System.out.println("Иницализация закончена, игра начнется через 5 секунд");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        for (int i = 0; i < 50; i++) {
-            System.out.println();
-        }
-        start();
+        sleepGame(5000);
+        System.out.println("\n".repeat(50));
     }
 
-    private void start(){
+    public void start() {
         yakubovich = new Yakubovich();
         yakubovich.sayStartShow();
         readyFinalRound = playGroupRounds();
@@ -44,8 +37,8 @@ public class Game {
         Player[] players = new Player[NUMBER_PLAYERS];
         for (int i = 0 ; i < NUMBER_PLAYERS; i++){
             System.out.println("Игрок №" + (i + 1) + " представьтесь: имя,город. Например: Иван,Москва");
-            String nameAndCity = scanner.nextLine();
-            players[i] = new Player(nameAndCity.split(","));
+            String[] nameAndCity = scanner.nextLine().split(",");
+            players[i] = new Player(nameAndCity[0], nameAndCity[1]);
         }
         return players;
     }
@@ -54,11 +47,11 @@ public class Game {
         tableau = new Tableau();
         for (int i = 0; i < NUMBER_GROUP_ROUNDS; i++){
             players = createPlayers();
-            yakubovich.greetingPlayers(getPlayersName(players), readyFinalRound);
+            yakubovich.greetingPlayers(getPlayersName(players), readyFinalRound, i);
             yakubovich.askQuestion(question[i]);
             tableau.init(answer[i]);
             tableau.showLettersOfTableau();
-            winners[i] = startPlayRound(players, tableau, readyFinalRound);
+            winners[i] = startPlayRound(players, readyFinalRound);
         }
         return true;
     }
@@ -71,7 +64,7 @@ public class Game {
         return namesPlayers;
     }
 
-    private Player startPlayRound(Player[] players, Tableau tableau, boolean readyFinalRound) {
+    private Player startPlayRound(Player[] players, boolean readyFinalRound) {
         while (true){
             for (Player player : players){
                 boolean result = true;
@@ -86,11 +79,11 @@ public class Game {
     }
 
     private void playFinalRound(boolean readyFinalRound) {
-        yakubovich.greetingPlayers(getPlayersName(winners), readyFinalRound);
+        yakubovich.greetingPlayers(getPlayersName(winners), readyFinalRound, 0);
         yakubovich.askQuestion(question[INDEX_FINAL_ROUND]);
         tableau.init(answer[INDEX_FINAL_ROUND]);
         tableau.showLettersOfTableau();
-        startPlayRound(winners, tableau, readyFinalRound);
+        startPlayRound(winners, readyFinalRound);
     }
 
     private void createQuestionAndAnswer() {
@@ -111,6 +104,14 @@ public class Game {
         answer[2] = "Осьминог";
         question[3] = "Какая страна мира имеет две столицы?";
         answer[3] = "Боливия";
+    }
+
+    private void sleepGame(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

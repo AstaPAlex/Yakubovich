@@ -1,8 +1,8 @@
 package org.javaacadmey.wonder_field.player;
 
 public class PlayerAnswer {
-    final private String answerPlayer;
-    final private String   typeAnswerPlayer;
+    private final String answerPlayer;
+    private final String   typeAnswerPlayer;
 
     public PlayerAnswer(String answerPlayer, String typeAnswerPlayer) {
         this.answerPlayer = answerPlayer.toUpperCase();

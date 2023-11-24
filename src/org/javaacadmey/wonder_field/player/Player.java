@@ -3,12 +3,12 @@ import org.javaacadmey.wonder_field.Game;
 import java.util.Locale;
 
 public class Player {
-    final private String name;
-    final private String city;
+    private final String name;
+    private final String city;
 
-    public Player(String[] nameAndCity) {
-        this.name = nameAndCity[0];
-        this.city = nameAndCity[1];
+    public Player(String name, String city) {
+        this.name = name;
+        this.city = city;
     }
 
     public String getName() {
@@ -23,7 +23,8 @@ public class Player {
         while (true) {
             String letter = Game.scanner.nextLine();
             if (letter.length() == 1) {
-                if (Character.UnicodeBlock.of(letter.charAt(0)).equals(Character.UnicodeBlock.CYRILLIC)){
+                char ch = letter.charAt(0);
+                if (ch >= 'А' & ch <= 'я'){
                     System.out.println("Игрок "+ name +": буква " + letter);
                     return letter.toUpperCase(Locale.ROOT);
                 } else {

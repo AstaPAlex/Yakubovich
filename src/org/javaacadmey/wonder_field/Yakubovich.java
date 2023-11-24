@@ -3,8 +3,6 @@ import org.javaacadmey.wonder_field.player.Player;
 import org.javaacadmey.wonder_field.player.PlayerAnswer;
 
 public class Yakubovich {
-    private int numberRound = 0;
-
     public void sayStartShow() {
         System.out.println("Якубович: Здравствуйте, уважаемые дамы и господа! Пятница! В эфире капитал-шоу \"Поле чудес\"!");
     }
@@ -13,13 +11,13 @@ public class Yakubovich {
         System.out.println("Якубович: Мы прощаемся с вами ровно на одну неделю! Здоровья вам, до встречи!");
     }
 
-    public void greetingPlayers(String[] namesPlayers, boolean readyFinalRound) {
+    public void greetingPlayers(String[] namesPlayers, boolean readyFinalRound,int numberRound) {
         if (readyFinalRound){
             System.out.println("Якубович: приглашаю победителей групповых этапов: ");
         } else {
-            System.out.print("Якубович: приглашаю " + ++numberRound + " тройку игроков: ");
+            System.out.print("Якубович: приглашаю " + (numberRound + 1) + " тройку игроков: ");
         }
-            for (int i=0; i < namesPlayers.length; i++){
+            for (int i=0; i < namesPlayers.length; i++) {
                 System.out.print(namesPlayers[i]);
                 if (i < (namesPlayers.length - 1)){
                     System.out.print(", ");
@@ -42,7 +40,7 @@ public class Yakubovich {
 
     public boolean checkAnswer(Player player, PlayerAnswer playerAnswer, Tableau tableau, boolean readyFinalRound) {
         if (playerAnswer.getTypeAnswerPlayer().equals("буква")){
-            return checkAnswerLetter(playerAnswer.getAnswerPlayer(),tableau);
+            return checkAnswerLetter(playerAnswer.getAnswerPlayer(), tableau);
         } else if (playerAnswer.getTypeAnswerPlayer().equals("слово")) {
             return checkAnswerWord(player, playerAnswer.getAnswerPlayer(), tableau, readyFinalRound);
         }
