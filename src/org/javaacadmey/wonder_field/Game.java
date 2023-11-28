@@ -1,13 +1,18 @@
 package org.javaacadmey.wonder_field;
 import org.javaacadmey.wonder_field.player.Player;
+import org.javaacadmey.wonder_field.player.PlayerAnswer;
+
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
     private static final int NUMBER_PLAYERS = 3;
-    private static final int NUMBER_ROUNDS = 4;
+    private static final int NUMBER_ROUNDS = 5;
     private static final int NUMBER_GROUP_ROUNDS = 3;
     private static final int INDEX_FINAL_ROUND = 3;
+    private static final int INDEX_SUPER_ROUND = 4;
     public static Scanner scanner = new Scanner(System.in);
+    public static Random random = new Random();
     private final String[] question = new String[NUMBER_ROUNDS];
     private final String[] answer = new String[NUMBER_ROUNDS];
     private Yakubovich yakubovich;
@@ -15,6 +20,10 @@ public class Game {
     private Player[] players;
     private Tableau tableau;
     private boolean readyFinalRound;
+    private Wheel wheel;
+    private int countRightAnswer;
+    private Player superWinner;
+    private Shop shop;
 
     public void init(){
         System.out.println("Запуск игры \"Поле чудес\" - подготовка к игре. Вам нужно ввести вопросы и ответы для игры.");
@@ -27,16 +36,20 @@ public class Game {
 
     public void start() {
         yakubovich = new Yakubovich();
+        tableau = new Tableau();
+        wheel = new Wheel();
+        shop = new Shop();
         yakubovich.sayStartShow();
         readyFinalRound = playGroupRounds();
-        playFinalRound(readyFinalRound);
+        superWinner = playFinalRound(readyFinalRound);
+        playSuperRound(superWinner);
         yakubovich.sayEndShow();
     }
 
     private Player[] createPlayers() {
         Player[] players = new Player[NUMBER_PLAYERS];
         for (int i = 0 ; i < NUMBER_PLAYERS; i++){
-            System.out.println("Игрок №" + (i + 1) + " представьтесь: имя,город. Например: Иван,Москва");
+            System.out.printf("Игрок №%d представьтесь: имя,город. Например: Иван,Москва\n", i + 1);
             String[] nameAndCity = scanner.nextLine().split(",");
             players[i] = new Player(nameAndCity[0], nameAndCity[1]);
         }
@@ -44,7 +57,6 @@ public class Game {
     }
 
     private boolean playGroupRounds() {
-        tableau = new Tableau();
         for (int i = 0; i < NUMBER_GROUP_ROUNDS; i++){
             players = createPlayers();
             yakubovich.greetingPlayers(getPlayersName(players), readyFinalRound, i);
@@ -67,23 +79,29 @@ public class Game {
     private Player startPlayRound(Player[] players, boolean readyFinalRound) {
         while (true){
             for (Player player : players){
-                boolean result = true;
-                while (result){
-                    result = yakubovich.checkAnswer(player, player.movePlayer(), tableau, readyFinalRound);
+                boolean result = false;
+                do {
+                    checkBoxes(player, result);
                     if (!tableau.containsUnknownLetters()){
+                        yakubovich.sayWinner(player, readyFinalRound);
                         return player;
                     }
-                }
+                    if (!yakubovich.checkWheel(player, wheel)) {
+                        break;
+                    }
+                    result = yakubovich.checkAnswer(player, player.movePlayer(), tableau, readyFinalRound);
+
+                } while (result);
             }
         }
     }
 
-    private void playFinalRound(boolean readyFinalRound) {
+    private Player playFinalRound(boolean readyFinalRound) {
         yakubovich.greetingPlayers(getPlayersName(winners), readyFinalRound, 0);
         yakubovich.askQuestion(question[INDEX_FINAL_ROUND]);
         tableau.init(answer[INDEX_FINAL_ROUND]);
         tableau.showLettersOfTableau();
-        startPlayRound(winners, readyFinalRound);
+        return startPlayRound(winners, readyFinalRound);
     }
 
     private void createQuestionAndAnswer() {
@@ -104,6 +122,8 @@ public class Game {
         answer[2] = "Осьминог";
         question[3] = "Какая страна мира имеет две столицы?";
         answer[3] = "Боливия";
+        question[4] = "Как у западных и южных славян назывались селение, деревня, курень?";
+        answer[4] = "Жупа";
     }
 
     private void sleepGame(int millis) {
@@ -112,6 +132,38 @@ public class Game {
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void checkBoxes(Player player, boolean result){
+        if (result) {
+            countRightAnswer++;
+        } else {
+            countRightAnswer = 0;
+            return;
+        }
+        if (countRightAnswer == 3) {
+            yakubovich.startGameCheckBox(player);
+            countRightAnswer = 0;
+        }
+    }
+
+    public void playSuperRound(Player player){
+        yakubovich.greetingSuperWinner(player);
+        shoping(player);
+        yakubovich.sayStartSuperGame();
+        yakubovich.askQuestion(question[INDEX_SUPER_ROUND]);
+        tableau.init(answer[INDEX_SUPER_ROUND]);
+        tableau.showLettersOfTableau();
+        new PlayerAnswer(player.sayLetter(), "буква");
+
+    }
+
+    public void shoping(Player player){
+        boolean result;
+        do {
+            shop.showItems();
+            result = shop.sellItem(player.buyItem(), player);
+        } while (result);
     }
 
 }
