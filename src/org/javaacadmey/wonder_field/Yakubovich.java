@@ -101,19 +101,26 @@ public class Yakubovich {
     public void greetingSuperWinner(Player player) {
         System.out.printf("Якубович: Игрок %s, перед Вами магазин с призами, Вы можете купить за очки любой приз! \n", player.getName());
     }
-    public void sayStartSuperGame() {
+    public boolean sayStartSuperGame(Player player) {
         System.out.print("Якубович: Покупки окончены! И теперь начинаем СУПЕР ИГРУ!!! \n");
+        System.out.printf("Якубович: Игрок %s вы согласны на СУПЕР ИГРУ? \n", player.getName());
+        if (!player.sayWantSuperGame()) {
+            return false;
+        }
         System.out.println("Якубович: Я Вам задам вопрос и Вы можете отгадать 3 буквы!");
         System.out.println("Якубович: После этого вы обязаны назвать слово целиком! Удачи!");
+        return true;
     }
 
     public void sayGuessWord() {
         System.out.println("Якубович: Теперь назовите слово!");
     }
 
-    public void saySuperWinner(Player player, boolean winGame, Tableau tableau) {
+    public void saySuperWinner(Player player, boolean winGame, Tableau tableau, Shop shop) {
         if (winGame) {
-            System.out.printf("Якубович: И Супер победителем Камитал шоу \"Поле Чудес\" становится %s из %s! Призы в студию! \n", player.getName(), player.getCity());
+            System.out.printf("Якубович: И победителем Камитал шоу \"Поле Чудес\" становится %s из %s! Призы в студию! \n", player.getName(), player.getCity());
+            System.out.printf("Якубов: А супер приз сегодня был: %s! \n", shop.getSuperItem());
+            System.out.println("Якубович: Призы в студию!");
             player.showPrizes();
         } else {
             System.out.printf("Якубович: К сожалению не правильно! Правильный ответ '%s' \n", tableau.getAnswer());

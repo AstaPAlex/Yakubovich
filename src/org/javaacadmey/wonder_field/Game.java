@@ -23,6 +23,8 @@ public class Game {
     private int countRightAnswer;
     private Player superWinner;
     private Shop shop;
+    private boolean winPlayerSuperGame;
+
 
     public void init(){
         System.out.println("Запуск игры \"Поле чудес\" - подготовка к игре. Вам нужно ввести вопросы и ответы для игры.");
@@ -149,13 +151,21 @@ public class Game {
     public void playSuperRound(Player player){
         yakubovich.greetingSuperWinner(player);
         shopping(player);
-        yakubovich.sayStartSuperGame();
-        yakubovich.askQuestion(question[INDEX_SUPER_ROUND]);
-        tableau.init(answer[INDEX_SUPER_ROUND]);
-        player.sayThreeLetters(tableau);
-        yakubovich.sayGuessWord();
-        boolean winGame = tableau.checkWord(player.sayWord());
-        yakubovich.saySuperWinner(player, winGame, tableau);
+        if (yakubovich.sayStartSuperGame(player)) {
+            String superItem = shop.createSuperItem();
+            yakubovich.askQuestion(question[INDEX_SUPER_ROUND]);
+            tableau.init(answer[INDEX_SUPER_ROUND]);
+            player.sayThreeLetters(tableau);
+            yakubovich.sayGuessWord();
+            winPlayerSuperGame = tableau.checkWord(player.sayWord());
+            if (winPlayerSuperGame) {
+                player.setItems(superItem);
+            }
+            yakubovich.saySuperWinner(player, winPlayerSuperGame, tableau, shop);
+        } else {
+            yakubovich.saySuperWinner(player, true, tableau, shop);
+        }
+
     }
 
     public void shopping(Player player){

@@ -6,6 +6,9 @@ public class Shop {
     private String[] items = {"Чашка", "Часы", "Самокат", "Телефон", "Ноутбук", "Компьюетр", "Путевка на море", "Мотоцикл", "Автомобиль"};
     private int[] prices = {100, 500, 700, 1000, 2000, 3000, 4000, 6000, 12000};
 
+    private String[] superItems = {"Квартира", "Дом", "Феррари"};
+    private int indexSuperItem;
+
     public void showItems() {
         System.out.println("Список товаров:");
         for (int i = 0; i < items.length; i++) {
@@ -33,5 +36,13 @@ public class Shop {
             System.out.printf("Остаток средств составляет: %d \n", player.getPoints());
             return true;
         }
+    }
+    public String getSuperItem(){
+        return superItems[indexSuperItem];
+    }
+
+    public String createSuperItem() {
+        indexSuperItem = Game.random.nextInt(3);
+        return superItems[indexSuperItem];
     }
 }

@@ -16,7 +16,7 @@ public class Player {
         this.name = name;
         this.city = city;
         points = 0;
-        items = new String[8];
+        items = new String[9];
         countItems = 0;
     }
 
@@ -138,6 +138,20 @@ public class Player {
         for (int i = 1; i < 4; i++) {
             tableau.checkLetters(sayLetter());
             tableau.showLettersOfTableau();
+        }
+    }
+
+    public boolean sayWantSuperGame(){
+        while (true) {
+            System.out.println("Если Вы согласны на супер игру введите 'д', если вы отказываетесь от супер игры введите 'н'");
+            String select = Game.scanner.nextLine();
+            if (select.equalsIgnoreCase("д")) {
+                return true;
+            } else if (select.equalsIgnoreCase("н")) {
+                return false;
+            } else {
+                System.out.println("Вы ввели не правильное значение!");
+            }
         }
     }
 
