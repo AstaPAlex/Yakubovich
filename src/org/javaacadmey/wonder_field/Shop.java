@@ -19,7 +19,7 @@ public class Shop {
         if (numItem == 0) {
             return false;
         }
-        if (items[numItem - 1].equals(null)) {
+        if (items[numItem - 1] == null) {
             System.out.println("Данный товар куплен, выберите другой!");
             return true;
         } else if (player.getPoints() < prices[numItem - 1]) {
@@ -28,6 +28,7 @@ public class Shop {
         } else {
             System.out.printf("Игрок выбрал %s \n", items[numItem - 1]);
             player.setPoints(player.getPoints() - prices[numItem - 1]);
+            player.setItems(items[numItem - 1]);
             items[numItem - 1] = null;
             System.out.printf("Остаток средств составляет: %d \n", player.getPoints());
             return true;

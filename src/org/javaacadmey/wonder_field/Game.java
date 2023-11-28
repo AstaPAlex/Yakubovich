@@ -1,6 +1,5 @@
 package org.javaacadmey.wonder_field;
 import org.javaacadmey.wonder_field.player.Player;
-import org.javaacadmey.wonder_field.player.PlayerAnswer;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -81,11 +80,11 @@ public class Game {
             for (Player player : players){
                 boolean result = false;
                 do {
-                    checkBoxes(player, result);
                     if (!tableau.containsUnknownLetters()){
                         yakubovich.sayWinner(player, readyFinalRound);
                         return player;
                     }
+                    checkBoxes(player, result);
                     if (!yakubovich.checkWheel(player, wheel)) {
                         break;
                     }
@@ -149,16 +148,17 @@ public class Game {
 
     public void playSuperRound(Player player){
         yakubovich.greetingSuperWinner(player);
-        shoping(player);
+        shopping(player);
         yakubovich.sayStartSuperGame();
         yakubovich.askQuestion(question[INDEX_SUPER_ROUND]);
         tableau.init(answer[INDEX_SUPER_ROUND]);
-        tableau.showLettersOfTableau();
-        new PlayerAnswer(player.sayLetter(), "буква");
-
+        player.sayThreeLetters(tableau);
+        yakubovich.sayGuessWord();
+        boolean winGame = tableau.checkWord(player.sayWord());
+        yakubovich.saySuperWinner(player, winGame, tableau);
     }
 
-    public void shoping(Player player){
+    public void shopping(Player player){
         boolean result;
         do {
             shop.showItems();

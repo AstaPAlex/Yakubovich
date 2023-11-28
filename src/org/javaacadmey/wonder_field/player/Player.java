@@ -1,6 +1,6 @@
 package org.javaacadmey.wonder_field.player;
 import org.javaacadmey.wonder_field.Game;
-import org.javaacadmey.wonder_field.Shop;
+import org.javaacadmey.wonder_field.Tableau;
 
 import java.util.Locale;
 
@@ -9,7 +9,7 @@ public class Player {
     private final String city;
     private int money;
     private int points;
-    private String[] items;
+    private final String[] items;
     private int countItems;
 
     public Player(String name, String city) {
@@ -25,12 +25,16 @@ public class Player {
         countItems++;
     }
 
-    public void showItems() {
+    public void showPrizes() {
+        System.out.println("На сцену выносят:");
+        if (getMoney() != 0) {
+            System.out.printf("Денежные средства: %d  рублей!\n", getMoney());
+        }
         for (int i = 0; i < items.length; i++) {
-            if (items[i].equals(null)){
+            if (items[i] == null){
                 return;
             }
-            System.out.printf("%d - %s", i + 1, items[i]);
+            System.out.printf("%d - %s \n", i + 1, items[i]);
         }
     }
 
@@ -106,10 +110,11 @@ public class Player {
             if (!select.equals("1") && !select.equals("2")) {
                 System.out.println("Некорректное значение, введите '1' или '2'");
             } else {
-                return Integer.valueOf(select);
+                return Integer.parseInt(select);
             }
         }
     }
+
     public int buyItem() {
         System.out.printf("Ход игрока %s из %s \n", name, city);
         while (true) {
@@ -118,17 +123,21 @@ public class Player {
             try {
                 if (select.equalsIgnoreCase("В")) {
                     return 0;
-                } else if (Integer.valueOf(select) <= 9 && Integer.valueOf(select) > 0) {
-                    return Integer.valueOf(select);
+                } else if (Integer.parseInt(select) <= 9 && Integer.parseInt(select) > 0) {
+                    return Integer.parseInt(select);
                 } else {
                     System.out.println("Игрок, вы ввели не правильное число!");
                 }
             } catch (NumberFormatException e){
                 System.out.println("Вы ввели не число, повторите ввод");
             }
+        }
+    }
 
-
-
+    public void sayThreeLetters(Tableau tableau) {
+        for (int i = 1; i < 4; i++) {
+            tableau.checkLetters(sayLetter());
+            tableau.showLettersOfTableau();
         }
     }
 

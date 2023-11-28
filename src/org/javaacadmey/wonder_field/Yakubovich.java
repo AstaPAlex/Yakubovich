@@ -66,6 +66,7 @@ public class Yakubovich {
     private boolean checkAnswerWord(Player player, String answerPlayer, Tableau tableau, boolean finalRound) {
         if (tableau.checkWord(answerPlayer)){
             System.out.printf("Якубович: %s. Абсолютно верно!\n", answerPlayer);
+
             return true;
         }
         System.out.println("Якубович: Неверно! Следующий игрок!\n");
@@ -101,8 +102,21 @@ public class Yakubovich {
         System.out.printf("Якубович: Игрок %s, перед Вами магазин с призами, Вы можете купить за очки любой приз! \n", player.getName());
     }
     public void sayStartSuperGame() {
-        System.out.print("Якубович: Покупки окончены! И теперь начинаем СУПЕР ИГРУ!!!");
+        System.out.print("Якубович: Покупки окончены! И теперь начинаем СУПЕР ИГРУ!!! \n");
         System.out.println("Якубович: Я Вам задам вопрос и Вы можете отгадать 3 буквы!");
         System.out.println("Якубович: После этого вы обязаны назвать слово целиком! Удачи!");
+    }
+
+    public void sayGuessWord() {
+        System.out.println("Якубович: Теперь назовите слово!");
+    }
+
+    public void saySuperWinner(Player player, boolean winGame, Tableau tableau) {
+        if (winGame) {
+            System.out.printf("Якубович: И Супер победителем Камитал шоу \"Поле Чудес\" становится %s из %s! Призы в студию! \n", player.getName(), player.getCity());
+            player.showPrizes();
+        } else {
+            System.out.printf("Якубович: К сожалению не правильно! Правильный ответ '%s' \n", tableau.getAnswer());
+        }
     }
 }

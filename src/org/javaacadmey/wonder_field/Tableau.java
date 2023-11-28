@@ -6,6 +6,10 @@ public class Tableau {
     private String answer;
     private String[] lettersOfTableau;
 
+    public String getAnswer() {
+        return answer;
+    }
+
     public void init(String answer) {
         lettersOfTableau = new String[answer.length()];
         Arrays.fill(lettersOfTableau, "_");
@@ -65,7 +69,9 @@ public class Tableau {
 
     public boolean containsUnknownLetters() {
         for (String letter : lettersOfTableau){
-            if (letter.equals("_")) return true;
+            if (letter.equals("_")) {
+                return true;
+            }
         }
         return false;
     }
