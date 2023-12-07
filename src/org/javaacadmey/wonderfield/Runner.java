@@ -1,4 +1,4 @@
-package org.javaacadmey.wonder_field;
+package org.javaacadmey.wonderfield;
 
 public class Runner {
     public static void main(String[] args) {

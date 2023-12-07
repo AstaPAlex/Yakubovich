@@ -1,4 +1,4 @@
-package org.javaacadmey.wonder_field.player;
+package org.javaacadmey.wonderfield.player;
 
 public class PlayerAnswer {
     private final String answerPlayer;
